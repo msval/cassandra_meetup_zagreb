@@ -1,0 +1,167 @@
+Cassandra started at facebook Jul 08
+Facebook and used at companies like Netflix, eBay, and Twitter. 
+
+Keyspace -> Database, Schema
+Column Family -> Table
+Row -> Row
+Flexible columns -> Defined columns
+
+Columns are sorted by name
+
+Composite columns
+	
+http://youtu.be/-zyZ35YyT_8?t=17m57s
+
+Logo slides There's an engineer that did a python script going
+out there, finding companies that say they use cassandra, find
+their log, put it in a file ...
+
+why cassandra?
+Viable technology
+
+ip 4x
+ip video 5x
+servers 10x
+mobile 25x
+storage 44x
+data 50x
+
+More connected
+
+2000 pictures on the phone
+pack rats by nature
+
+People are less tollerant for problems
+
+Traditional technologies work great, but still
+
+shard hell (2002, 2003 - memcache, saved the world for a year)
+
+Cassandra - new plan
+
+apply computer science
+
+Dynamo Paper 2007 (2007) - 
+"Always On". Jeff Bezos, I want money do not let my shopping carts go down
+put phds on it.
+24 papers going back to the 70ties
+
+BigTable 2006
+	- richer data
+	1 key lot's of values
+	fast sequental access
+
+Cassandra 2008
+	- blend of dynamo paper big table
+	- Distributed nature of dynamo
+	- datamodel and storage from big table
+
+	17.2.2010 top level apache project
+
+Cassandra
+	- All nodes participate in a cluster
+	- Shared nothing
+	- Add or remove as needed
+	- More capacity? Add server
+
+Benchmarks
+http://planetcassandra.org/nosql-performance-benchmarks/
+	- it proves dynamo paper
+
+Cassandra - Fully Replicated
+	- Client writes local
+	- Data syncs across WAN
+	- Replication Factor per DC
+	- Active, Active
+
+Cassandra
+	- writes on single node (mutation)
+	- writes it to a comit log (append only, no seeks)
+	- after commit goes into mem table
+	- After mem table, it returns to the client
+	- nex thing is flush (as the tables fill up)
+	- flush writes to the sorted string table
+	- makes sequential write, order is perserved on disk
+	- time series is so good with cassandra
+	- once the write is done it's done, it never writes to that part again
+	- last write wins, over time compaction happens
+	- from time to time, reads the data into mem table
+	- does a merge sort
+	- picks a new file with the merge sorded data and writes it down
+	- disc space goes up and down (normal)
+
+Cassandra writes in the cluster
+	- primary key determines placement (MD5 -> 128 bits)
+	- Token ring A, B, C, D
+	- 128 bits -> into 4 ranges
+	- replication -> each node has replication factor (3 - primary node + 2 replicas)
+	- Virtual nodes -> better commissioning and bootstrapping
+
+Cassandra Reads
+	- reads are different class of problems
+	- consistency, client can ask any node for data
+	- node 4 becoms coordinator, cluster awareness
+	- 
+
+Consistency level
+ - set with every read and write
+ - ONE - want to be fast
+ - Quorum > 51%
+ - LOCAL_QUORUM
+ - LOCAL ONE - read repair only in local DC, quick consistendy check
+ - TWO
+ - ALL - All replicas ack. Full consistency (what your boss wants)
+ - not mentioned cassandra 2.0 Lightweight transactions (if exists)
+ (paxos locking) - a lot of zoo keeper stories
+
+ CQL
+ - List of columns
+ - no sizes varchar(size), size is random and open, up to 2GB
+ - First item in PRIMARY KEY is the partition key
+
+ looks a lot like sql
+
+Insert will always overwrite, insert never checks, insert if exists (paxos)
+
+WITH CLUSTERING ORDER BY (interaction_time DESC);
+
+USING TTL 25920000; (seconds) - expires after 30 days ( PURGE JOB )
+
+Cassandra security, it shipped for years without password
+
+out of the box encryption, ssl between the nodes
+grant revoke, external authentication.
+
+Question
+Dynamo paper
+	- vector clocks where the conflicts would be resolved on an application level
+	- vector clock in cassandra replaced with physical clock meaning last write wins
+	- patrick: performance, million writes per second wins, 
+	but:
+	implements ClockResolution
+		 - long createClock();
+
+	cassandraHostConfigurator.setClockResolution(new SequentialClockResolution());
+
+	eventual consistency has always been a problem
+		- lot of the original papers were from IBM
+		- banks are eventually consistent, Jamaica
+		- overdraft fees overcharge fees
+		- ledgering using semantics of big table, writing multiple parts of same value
+		- data modeling is the key
+
+	cassandra & hbase similary
+		- one row key lots of columns, HDFS
+		- cassandra is operationally a log easier to run
+		- 3 years working, no out time, people leaving
+		- hbase has no cql
+		- map reduce is beter on HDFS
+
+	compaction
+		- shared storage on cassandra is terrible for sequential ios
+
+	consistency
+	- manual, repair
+	- automatic, hint
+
+
