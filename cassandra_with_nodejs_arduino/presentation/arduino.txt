@@ -1,0 +1,33 @@
+Arduino is opensource electronics platform
+
+allows people not very skilled in electronics to do things
+
+Analog and digital pins
+
+Arduino is programmed with a variation of c
+
+digitalWrite
+
+arduino programs are called sketches
+
+Arduino started in 2005
+
+People made shields that plugin into arduinos
+
+Chinese companies making arduino clones
+
+Arduino name
+
+Raspberry is a full computer
+has digital pins for in out, it does not have 
+a whole range off analog digital capabilities
+
+Sensor around your house, combining
+
+arduino yun, linux system on a chip with wifi
+
+Ardusat
+
+remote controll cars, button games, hobbieist space prgoramme
+
+light sensor, motor

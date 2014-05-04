@@ -1,0 +1,63 @@
+Node - range of what you can do with it
+
+node.js is not in 1.0
+
+Who's using it today:
+	- wallmart, ebay, dow joes, twitter, microsoft, linkedin (entire mobile backend)
+
+node.js is a little bit different
+at it's core it's a wrapper around google's v8 - javascript interpreter
+
+not one big server that has everything you ever need, but includes modules as you
+need them by using something called npm
+	- http server
+	- file system
+	- utilities
+
+
+http://kunkle.org/nodejs-explained-pres/#/overview
+
+Event ----->     Event Loop ->  Thread Pool
+Queue                             filesystem
+----                              network
+----                              process
+----                              other
+----
+/\
+||
+
+node.js is non blocking
+	- operation is sent to event queue
+	- event loop gives it to something to process it
+
+doSomeIO(- we are passing in a function, usually called callback);
+doSomeDBStuff();
+doALittle();
+
+doSomeIO(function () {
+	doSomeDatabaseStuff();
+});
+
+doALittle();
+
+npm - repository of package you include, they are called modules, express for instance is a module
+
+usually socket.io and some kind of chat etc.
+
+at the very top, fs = require(fs) - it's just using fs core
+
+npm is the core of what community adds to node.js, similar to ruby gems
+npm is growing insanely fast, 100 000 000 modules (100 millions)
+
+node.js built in debugger, node inspector, connects to crome debugger
+eclipse, ties into native node.js debugger
+webstorm
+
+express the base of how we build more web sites, jade
+
+socket io, async - helping handle the async,
+
+promises - Q
+
+database engines, mongoDB (mongoose is an orm),
+
