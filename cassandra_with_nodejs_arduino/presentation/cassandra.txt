@@ -10,7 +10,15 @@ Columns are sorted by name
 
 Composite columns
 	
-http://youtu.be/-zyZ35YyT_8?t=17m57s
+http://youtu.be/-zyZ35YyT_8?t=45m21s
+
+Reading all the data all the time
+
+Inverted index
+
+Single row can reside on one node (Hotspots, wide an active row)
+
+Sharding (monday, tuesday)
 
 Logo slides There's an engineer that did a python script going
 out there, finding companies that say they use cassandra, find
